@@ -1,0 +1,59 @@
+@import "../../global.scss";
+
+.menu{
+    width: 370px;
+    height: 100vh;
+    background-color: $mainColor;
+    position: fixed;
+    top: 0;
+    right: -300px;
+    z-index: 2;
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Hide scrollbars */
+
+
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+
+    &.active{
+        right: 0;
+    }
+
+    ul{
+        margin:0;
+        padding: 0;
+        list-style: none;
+        font-size: 30px;
+        color: white;
+        font-weight: 300;
+        width: 60%;
+
+
+        li{
+            margin-bottom: 25px;
+            a{
+                font-size: inherit;
+                color: inherit;
+                text-decoration: none;
+
+            }
+
+             &:hover{
+                 font-weight: 500;
+             }   
+
+        }
+
+
+
+    }
+
+}
