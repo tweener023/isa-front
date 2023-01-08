@@ -4,6 +4,8 @@ import CustomAppointment from "./components/CustomAppointment/CustomAppointment"
 import Topbar from "./components/topbar/Topbar";
 import Facilities from "./components/facilities/Facilities";
 import AvailableAppointments from "./components/AvailableAppointments/AvailableAppointments";
+import Login from "./components/Login/Login"
+import RegistrationForm from "./components/Registration/RegistrationForm";
 import "./app.scss"
 import { useState } from "react";
 import Menu from "./components/menu/Menu";
@@ -15,6 +17,8 @@ function App() {
        <Topbar menuOpen={menuOpen} setMenuOpen = {setMenuOpen} />
       <Menu menuOpen={menuOpen} setMenuOpen = {setMenuOpen}/>
       <div className="sections">
+        <Login/>
+        <RegistrationForm/>
         <Profile/>
         <MyAppointments/>
         <AvailableAppointments/>

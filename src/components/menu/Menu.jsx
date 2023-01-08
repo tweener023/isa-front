@@ -6,6 +6,15 @@ export default function Menu({menuOpen, setMenuOpen}) {
   return (
     <div className={'menu ' + (menuOpen && "active")}>
         <ul>
+            
+            <li onClick={() =>setMenuOpen(false)}>
+                <a href = "#login"> Login </a>
+            </li>
+        
+            <li onClick={() =>setMenuOpen(false)}>
+                <a href = "#registrationForm"> Registration </a>
+            </li>
+
             <li onClick={() =>setMenuOpen(false)}>
                 <a href = "#profile"> Profile </a>
             </li>
