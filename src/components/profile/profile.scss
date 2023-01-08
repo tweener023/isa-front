@@ -1,15 +1,77 @@
 @import "../../global.scss";
 
-.profile{
+.profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 5px;
     background-color: white;
+  }
+  
+  .profile-column {
+    flex: 0 0 50%;
+    max-width: 50%;
+    margin: 0 20px 20px 0;
+  }
+  
+  .headingProfile{
+    color: white;
+    padding: 10px;
+    font-style: italic;
+    border-radius: 5px;
+    background-color: #00A86B;
+    width: fit-content;
+  }
+  .leftAndRight{
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px -8px black;
+    padding: 70px;
+    color: lightgray;
+    background-color: darkcyan;
+  }
+
+  .labelStyle{
+    color: white;
+  }
+  
+  .profile-field {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    h1{
-        font-size: 50px;
-        color: $mainColor;
-    }
-    
+    margin: 10px 0;
+  }
+  
+  .profile-field label {
+    font-weight: bold;
+    margin: 0 0 5px;
+  }
+  
+  .profile-field input[type="text"],
+  .profile-field input[type="email"],
+  .profile-field input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #4caf50;
+    cursor: pointer;
+    width: 20%
 }
+  
+  button:hover {
+    background-color: #3f9e46;
+  }
+  
