@@ -142,13 +142,13 @@ function Profile() {
               <p>{profile.points}</p>
             )}
           </div>
-        </div>
-      </div>
-      {isEditing ? (
+          {isEditing ? (
           <button onClick={handleSaveClick}>Save</button>
         ) : (
           <button onClick={handleEditClick}>Edit</button>
         )}
+        </div>
+      </div>
     </div>
   );
 }
