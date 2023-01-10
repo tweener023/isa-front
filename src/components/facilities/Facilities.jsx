@@ -21,16 +21,33 @@ function Facilities() {
   };
 
   const handleFacilitySelect = facility => {
+    console.log('handleFacilitySelect called with', facility);
     setSelectedFacility(facility);
+    console.log('selectedFacility set to', selectedFacility);
+
   };
 
   const handleFacilityClose = () => {
     setSelectedFacility(null);
   };
 
+
+   const filteredFacilities =
+    facilities && facilities.length > 0
+      ? facilities.filter(
+          facility =>
+            facility &&
+            facility.centerName &&
+            facility.centerName.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      : [];
+  
+
+      /*
   const filteredFacilities = facilities?.filter(facility =>
     facility.centerName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+*/
 
   return (
     <div className="Facilities" id = "facilities">
@@ -45,30 +62,33 @@ function Facilities() {
       </header>
       <div className="facility-list">
         {filteredFacilities.map(facility => (
-          <div className="facility" key={facility.centerName}>
-            <h2>{facility.centerName}</h2>
-            <p>{facility.centerAddress}</p>
-            <button onClick={() => handleFacilitySelect(facility)}>
-              See more
-            </button>
-          </div>
+          <Facility
+            facility={facility}
+            onSelect={handleFacilitySelect}
+            key={facility.centerId}
+          />
         ))}
       </div>
-      {selectedFacility?.centerAppointments && (
+      {selectedFacility !== null && (
         <div className="facility-overlay">
           <div className="facility-detail">
             <h2>{selectedFacility.centerName}</h2>
-            <p>{selectedFacility.centerDescription}</p>
-            <h3>Available appointments:</h3>
-            <ul>
-              {selectedFacility.centerAppointments.map(appointment => (
-                <li key={appointment}>{appointment}</li>
-              ))}
-            </ul>
+            <p>Center description: {selectedFacility.centerDescription}</p>
+            <p>Number of supplies: {selectedFacility.centerSupplies}</p>
             <button onClick={handleFacilityClose}>Close</button>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function Facility({ facility, onSelect }) {
+  return (
+    <div className="facility" key={facility.centerId}>
+      <h2>{facility.centerName}</h2>
+      <p>{facility.centerAddress}</p>
+      <button onClick={() => onSelect(facility)}>See more</button>
     </div>
   );
 }
