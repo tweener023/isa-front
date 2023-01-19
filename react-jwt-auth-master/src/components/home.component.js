@@ -10,7 +10,7 @@ export default function Home (){
   const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/facilites/all')
+    fetch('http://localhost:8080/api/test/facilities/all')
       .then(response => response.json())
       .then(data => setFacilities(data));
   }, []);
