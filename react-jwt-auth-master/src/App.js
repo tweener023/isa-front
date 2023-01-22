@@ -76,7 +76,7 @@ class App extends Component {
             {showMedicBoard && (
               <li className="nav-item">
                 <Link to={"/medic"} className="nav-link">
-                  Medic Board
+                  My Facility
                 </Link>
               </li>
             )}

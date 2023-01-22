@@ -19,6 +19,13 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + "admin", { headers: authHeader() });
   }
+
+  getFacilityByMedic(medicId, token) {
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    return axios.get(`http://localhost:8080/api/users/facility/${medicId}`, { headers }); // promeniti kad napravim ne BE metodu
+  }
 }
 
 export default new UserService();
