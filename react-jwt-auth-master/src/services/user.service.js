@@ -26,6 +26,13 @@ class UserService {
     };
     return axios.get(`http://localhost:8080/api/users/facility/${medicId}`, { headers }); // promeniti kad napravim ne BE metodu
   }
+
+  getAppointmentsByFacility(centerId, token) {
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    return axios.get(`http://localhost:8080/api/appointments/facility/${centerId}`, {headers});
+  }
 }
 
 export default new UserService();
