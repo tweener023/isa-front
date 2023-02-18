@@ -33,6 +33,17 @@ class UserService {
     };
     return axios.get(`http://localhost:8080/api/appointments/facility/${centerId}`, {headers});
   }
+
+  static getNewAppointment(date) {
+    const currentUser = localStorage.getItem("user");
+    const token = currentUser.token;
+    return axios.post("http://localhost:8080/api/appointments/", date, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }
 
 export default new UserService();

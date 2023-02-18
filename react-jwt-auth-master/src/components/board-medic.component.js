@@ -64,25 +64,12 @@ export default class BoardMedic extends Component {
   }
   handleNewAppointment = (e) => {
     e.preventDefault();
-    const { date, time } = this.state;
-    const token = localStorage.getItem("token");
-    axios
-      .post("http://localhost:8080/api/appointments/facility/{centerId}", { date, time }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((response) => {
-        console.log(response);
-        this.setState({
-          appointments: [...this.state.appointments, response.data],
-          modalIsOpen: false
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("An error occurred while creating the appointment");
-      });
+    const { date } = this.state;
+    UserService.getNewAppointment(date).then((response) => {
+        console.log(response)
+    }).catch((error) => {
+        console.log(error)
+    });
   };
   handleOpenModal = () => {
     this.setState({ modalIsOpen: true });
