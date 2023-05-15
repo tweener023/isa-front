@@ -10,8 +10,8 @@ class AuthService {
         password,
       })
       .then((response) => {
-        console.log(response.data.token)
-        console.log(response.data)
+        console.log(response.data.token);
+        console.log(response.data);
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
@@ -28,6 +28,7 @@ class AuthService {
     username,
     email,
     password,
+    confirmPassword,
     firstName,
     lastName,
     address,
@@ -45,6 +46,7 @@ class AuthService {
       username,
       email,
       password,
+      confirmPassword,
       firstName,
       lastName,
       address,
@@ -62,9 +64,8 @@ class AuthService {
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
-
   }
-  getJwt(){
+  getJwt() {
     const user = JSON.parse(localStorage.getItem("user"));
     return user ? user.token : null;
   }

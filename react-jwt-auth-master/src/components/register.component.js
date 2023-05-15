@@ -46,6 +46,17 @@ const vpassword = (value) => {
   }
 };
 
+const vconfirmPassword = (value, props, components) => {
+  const password = components.password[0].value;
+  if (value !== password) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The passwords do not match.
+      </div>
+    );
+  }
+};
+
 export default class Register extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +64,7 @@ export default class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeConfirmPassword = this.onChangeConfirmPassword.bind(this);
     this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangeAddress = this.onChangeAddress.bind(this);
@@ -70,6 +82,7 @@ export default class Register extends Component {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
       firstName: "",
       lastName: "",
       address: "",
@@ -102,6 +115,12 @@ export default class Register extends Component {
   onChangePassword(e) {
     this.setState({
       password: e.target.value,
+    });
+  }
+
+  onChangeConfirmPassword(e) {
+    this.setState({
+      confirmPassword: e.target.value,
     });
   }
 
@@ -192,6 +211,7 @@ export default class Register extends Component {
         this.state.username,
         this.state.email,
         this.state.password,
+        this.state.confirmPassword,
         this.state.firstName,
         this.state.lastName,
         this.state.address,
@@ -279,6 +299,18 @@ export default class Register extends Component {
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <Input
+                    type="password"
+                    className="form-control"
+                    name="confirmPassword"
+                    value={this.state.confirmPassword}
+                    onChange={this.onChangeConfirmPassword}
+                    validations={[required, vpassword, vconfirmPassword]}
                   />
                 </div>
 
