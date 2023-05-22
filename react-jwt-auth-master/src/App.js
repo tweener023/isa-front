@@ -7,11 +7,12 @@ import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";
 import Register from "./components/register.component";
-import Home from "./components/home.component";
+import Facilities from "./components/facilities.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/board-user.component";
 import BoardMedic from "./components/board-medic.component";
 import BoardAdmin from "./components/board-admin.component";
+import HomeUser from "./components/homeUser.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -63,12 +64,23 @@ class App extends Component {
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
+          <Link
+            to={
+              currentUser
+                ? showMedicBoard
+                  ? "/medic" // will point to medic homePage
+                  : showAdminBoard
+                  ? "/admin" // will point to admin homePage
+                  : "/homeUser"
+                : "/facilities"
+            }
+            className="navbar-brand"
+          >
             Transfusion centre
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
+              <Link to={"/facilities"} className="nav-link">
                 Facilities
               </Link>
             </li>
@@ -90,11 +102,48 @@ class App extends Component {
             )}
 
             {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    User
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    Past Visits
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    Scheaduled Visits
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    QR codes
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    Penalties
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    Fill Questionnaire
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link to={"/user"} className="nav-link">
+                    Write Complaint
+                  </Link>
+                </li>
+              </>
             )}
           </div>
 
@@ -130,8 +179,9 @@ class App extends Component {
 
         <div className="container mt-3">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Facilities />} />
+            <Route path="/homeUser" element={<HomeUser />} />
+            <Route path="/facilities" element={<Facilities />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />

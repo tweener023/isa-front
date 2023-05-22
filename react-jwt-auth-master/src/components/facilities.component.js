@@ -1,40 +1,37 @@
 import React, { Component, useState, useEffect } from "react";
 
 import UserService from "../services/user.service";
-import "../styles/facilities.scss"
+import "../styles/facilities.scss";
 
-
-export default function Home (){
-  const [searchTerm, setSearchTerm] = useState('');
+export default function Facilities() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/test/facilities/all')
-      .then(response => response.json())
-      .then(data => setFacilities(data));
+    fetch("http://localhost:8080/api/test/facilities/all")
+      .then((response) => response.json())
+      .then((data) => setFacilities(data));
   }, []);
 
-  const handleSearchChange = event => {
+  const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleFacilitySelect = facility => {
-    console.log('handleFacilitySelect called with', facility);
+  const handleFacilitySelect = (facility) => {
+    console.log("handleFacilitySelect called with", facility);
     setSelectedFacility(facility);
-    console.log('selectedFacility set to', selectedFacility);
-
+    console.log("selectedFacility set to", selectedFacility);
   };
 
   const handleFacilityClose = () => {
     setSelectedFacility(null);
   };
 
-
-   const filteredFacilities =
+  const filteredFacilities =
     facilities && facilities.length > 0
       ? facilities.filter(
-          facility =>
+          (facility) =>
             facility &&
             facility.centerName &&
             facility.centerName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -42,7 +39,7 @@ export default function Home (){
       : [];
 
   return (
-    <div className="Facilities" id = "facilities">
+    <div className="Facilities" id="facilities">
       <header className="App-header">
         <h1 className="FacilityH1">Facilities</h1>
         <input
@@ -53,7 +50,7 @@ export default function Home (){
         />
       </header>
       <div className="facility-list">
-        {filteredFacilities.map(facility => (
+        {filteredFacilities.map((facility) => (
           <Facility
             facility={facility}
             onSelect={handleFacilitySelect}
