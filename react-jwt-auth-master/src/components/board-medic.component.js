@@ -6,13 +6,15 @@ import AuthService from "../services/auth.service";
 import Modal from "react-modal"
 import axios from "axios";
 import "../styles/myfacilities.scss";
-Modal.setAppElement('#root'); // root is the id of the root element in your application
+Modal.setAppElement('#root'); 
 
 
 export default class BoardMedic extends Component {
   constructor(props) {
     super(props);
     this.handleNewAppointment = this.handleNewAppointment.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.state = {
       content: "",
     };
@@ -62,14 +64,28 @@ export default class BoardMedic extends Component {
       }
     );
   }
+
   handleNewAppointment = (e) => {
     e.preventDefault();
+    const currentUser = AuthService.getCurrentUser();
+
     const { date } = this.state;
-    UserService.getNewAppointment(date).then((response) => {
+    const {center} = UserService.getFacilityByMedic(currentUser.id, currentUser.token);
+    UserService.createNewAppointment(date, center).then((response) => {
         console.log(response)
     }).catch((error) => {
         console.log(error)
     });
+  };
+
+  handleOpenModal = () => {
+    this.setState({ modalIsOpen: true });
+  };
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  handleCloseModal = () => {
+    this.setState({ modalIsOpen: false });
   };
   handleOpenModal = () => {
     this.setState({ modalIsOpen: true });
@@ -152,7 +168,7 @@ export default class BoardMedic extends Component {
           contentLabel="New Appointment"
         >
           <h2>New Appointment</h2>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleNewAppointment}>
             <label>
               Date:
               <input

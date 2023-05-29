@@ -24,7 +24,7 @@ class UserService {
     const headers = {
       Authorization: `Bearer ${token}`
     };
-    return axios.get(`http://localhost:8080/api/users/facility/${medicId}`, { headers }); // promeniti kad napravim ne BE metodu
+    return axios.get(`http://localhost:8080/api/users/facility/${medicId}`, { headers }); 
   }
 
   getAppointmentsByFacility(centerId, token) {
@@ -34,10 +34,12 @@ class UserService {
     return axios.get(`http://localhost:8080/api/appointments/facility/${centerId}`, {headers});
   }
 
-  static getNewAppointment(date) {
-    const currentUser = localStorage.getItem("user");
+   createNewAppointment(date, center) {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     const token = currentUser.token;
-    return axios.post("http://localhost:8080/api/appointments/", date, {
+    const userId = currentUser.userId;
+    //const centerName = center.centerName;
+    return axios.post("http://localhost:8080/api/appointments/", {userId, date}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'

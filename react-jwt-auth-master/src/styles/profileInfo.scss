@@ -10,61 +10,40 @@
     margin-left: 3%;
 }
 
-.btnChangeInfo{
-    margin-top: 5px;
-    margin-left: 30%;
-    align-items: center;
-    position: absolute;
-    border-radius: 5px;
-    margin-left: 15%;
-    padding-left: 10%;
-    padding-right: 10%;
+  
+.btnSave {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
 }
 
-.btnSave {
-    background-color: green;
-    color: white;
-    padding: 0.5rem 1rem;
-    margin-left: 5%;
-    margin-top: 5px;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    &:hover {
-      background-color: darkgreen;
-      cursor: pointer;
-    }
-  }
-  
-  .btnChange {
-    background-color: blue;
-    color: white;
-    padding: 0.5rem 1rem;
-    margin-left: 40%;
-    margin-top:5px;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    &:hover {
-      background-color: darkblue;
-      cursor: pointer;
-    }
-  }
+.btnCancel {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btnChange {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
   .button-container {
     text-align: center;
-  }
-  
-  .btnCancel {
-    background-color: red;
-    color: white;
-    margin-left: 3px;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    text-transform: uppercase;
-    font-weight: bold;
-    &:hover {
-      background-color: darkred;
-      cursor: pointer;
-    }
   }
   
