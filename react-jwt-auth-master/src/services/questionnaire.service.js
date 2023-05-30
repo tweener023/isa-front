@@ -22,7 +22,8 @@ class QuestionnaireService {
     accepted,
     drunkAlcohol,
     hadTattoo,
-    dangerousJob
+    dangerousJob,
+    donatedBlood
   ) {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const token = currentUser.token;
@@ -49,6 +50,8 @@ class QuestionnaireService {
         drunkAlcohol,
         hadTattoo,
         dangerousJob,
+        donatedBlood,
+        userId,
       },
       {
         headers: {

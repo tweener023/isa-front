@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { Link, Route } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
 import questionnaireService from "../services/questionnaire.service";
@@ -39,6 +40,7 @@ export default class FillingQuestionnaire extends Component {
     this.onChangeDrunkAlcohol = this.onChangeDrunkAlcohol.bind(this);
     this.onChangeHadTattoo = this.onChangeHadTattoo.bind(this);
     this.onChangeDangerousJob = this.onChangeDangerousJob.bind(this);
+    this.onChangeDonatedBlood = this.onChangeDonatedBlood.bind(this);
 
     this.state = {
       dateOfQuestionnaire: "",
@@ -55,19 +57,20 @@ export default class FillingQuestionnaire extends Component {
       job: "",
       timesGiven: "",
       bloodType: "",
-      accepted: "",
-      drunkAlcohol: "",
-      hadTattoo: "",
-      dangerousJob: "",
+      accepted: false,
+      drunkAlcohol: false,
+      hadTattoo: false,
+      dangerousJob: false,
+      donatedBlood: false,
       user: "",
       successful: false,
       message: "",
+      submitted: false,
     };
   }
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
-    console.log(currentUser);
     if (currentUser && currentUser.id) {
       this.setState({
         user: currentUser.id,
@@ -167,25 +170,31 @@ export default class FillingQuestionnaire extends Component {
 
   onChangeAccepted(e) {
     this.setState({
-      accepted: e.target.checked,
+      accepted: e.target.checked || false,
     });
   }
 
   onChangeDrunkAlcohol(e) {
     this.setState({
-      drunkAlcohol: e.target.checked,
+      drunkAlcohol: e.target.checked || false,
     });
   }
 
   onChangeHadTattoo(e) {
     this.setState({
-      hadTattoo: e.target.checked,
+      hadTattoo: e.target.checked || false,
     });
   }
 
   onChangeDangerousJob(e) {
     this.setState({
-      dangerousJob: e.target.checked,
+      dangerousJob: e.target.checked || false,
+    });
+  }
+
+  onChangeDonatedBlood(e) {
+    this.setState({
+      donatedBlood: e.target.checked || false,
     });
   }
 
@@ -220,6 +229,7 @@ export default class FillingQuestionnaire extends Component {
           this.state.drunkAlcohol,
           this.state.hadTattoo,
           this.state.dangerousJob,
+          this.state.donatedBlood,
           this.state.user
         )
         .then(
@@ -227,6 +237,7 @@ export default class FillingQuestionnaire extends Component {
             this.setState({
               message: response.data.message,
               successful: true,
+              submitted: true,
             });
           },
           (error) => {
@@ -247,6 +258,13 @@ export default class FillingQuestionnaire extends Component {
   }
 
   render() {
+    if (this.state.submitted) {
+      return (
+        <div>
+          <h1>Thank you for submitting the questionnaire!</h1>
+        </div>
+      );
+    }
     return (
       <div className="col-md-12">
         <div className="card card-container">
@@ -478,6 +496,18 @@ export default class FillingQuestionnaire extends Component {
                     name="dangerousJob"
                     checked={this.state.dangerousJob}
                     onChange={this.onChangeDangerousJob}
+                    validations={[]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="donatedBlood">Donated blood</label>
+                  <Input
+                    type="checkbox"
+                    className="form-control"
+                    name="donatedBlood"
+                    checked={this.state.donatedBlood}
+                    onChange={this.onChangeDonatedBlood}
                     validations={[]}
                   />
                 </div>

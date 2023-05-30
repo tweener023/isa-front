@@ -189,6 +189,7 @@ class App extends Component {
             <Route path="/user" element={<BoardUser />} />
             <Route path="/medic" element={<BoardMedic />} />
             <Route path="/admin" element={<BoardAdmin />} />
+
             <Route
               path="/fillQuestionnaire"
               element={<FillingQuestionnaire />}
