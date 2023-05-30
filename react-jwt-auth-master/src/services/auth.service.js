@@ -69,6 +69,10 @@ class AuthService {
     const user = JSON.parse(localStorage.getItem("user"));
     return user ? user.token : null;
   }
+  getCurrentUserId() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user ? user.id : null;
+  }
 }
 
 export default new AuthService();

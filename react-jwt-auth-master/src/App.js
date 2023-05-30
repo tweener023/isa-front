@@ -13,6 +13,7 @@ import BoardUser from "./components/board-user.component";
 import BoardMedic from "./components/board-medic.component";
 import BoardAdmin from "./components/board-admin.component";
 import HomeUser from "./components/homeUser.component";
+import FillingQuestionnaire from "./components/fillingQuestionnaire.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -133,7 +134,7 @@ class App extends Component {
                 </li>
 
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/fillQuestionnaire"} className="nav-link">
                     Fill Questionnaire
                   </Link>
                 </li>
@@ -188,6 +189,10 @@ class App extends Component {
             <Route path="/user" element={<BoardUser />} />
             <Route path="/medic" element={<BoardMedic />} />
             <Route path="/admin" element={<BoardAdmin />} />
+            <Route
+              path="/fillQuestionnaire"
+              element={<FillingQuestionnaire />}
+            />
           </Routes>
         </div>
 
