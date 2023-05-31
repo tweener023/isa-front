@@ -39,7 +39,7 @@ class App extends Component {
       this.setState({
         currentUser: user,
         showMedicBoard: user.roles.includes("ROLE_MEDIC"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showAdminBoard: user.roles.includes("ROLE_ADMINISTRATOR"),
       });
     }
 
@@ -104,45 +104,48 @@ class App extends Component {
               </li>
             )}
 
-            {currentUser && (
-              <>
-                <li className="nav-item">
-                  <Link to={"/notImplemented"} className="nav-link">
-                    Past Visits
-                  </Link>
-                </li>
+            {currentUser &&
+              !showMedicBoard &&
+              !showAdminBoard &&
+              currentUser.roles.includes("ROLE_USER") && (
+                <>
+                  <li className="nav-item">
+                    <Link to={"/notImplemented"} className="nav-link">
+                      Past Visits
+                    </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/notImplemented"} className="nav-link">
-                    Scheaduled Visits
-                  </Link>
-                </li>
+                  <li className="nav-item">
+                    <Link to={"/notImplemented"} className="nav-link">
+                      Scheduled Visits
+                    </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/notImplemented"} className="nav-link">
-                    QR codes
-                  </Link>
-                </li>
+                  <li className="nav-item">
+                    <Link to={"/notImplemented"} className="nav-link">
+                      QR codes
+                    </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/notImplemented"} className="nav-link">
-                    Penalties
-                  </Link>
-                </li>
+                  <li className="nav-item">
+                    <Link to={"/notImplemented"} className="nav-link">
+                      Penalties
+                    </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/fillQuestionnaire"} className="nav-link">
-                    Fill Questionnaire
-                  </Link>
-                </li>
+                  <li className="nav-item">
+                    <Link to={"/fillQuestionnaire"} className="nav-link">
+                      Fill Questionnaire
+                    </Link>
+                  </li>
 
-                <li className="nav-item">
-                  <Link to={"/notImplemented"} className="nav-link">
-                    Write Complaint
-                  </Link>
-                </li>
-              </>
-            )}
+                  <li className="nav-item">
+                    <Link to={"/notImplemented"} className="nav-link">
+                      Write Complaint
+                    </Link>
+                  </li>
+                </>
+              )}
           </div>
 
           {currentUser ? (
