@@ -192,7 +192,10 @@ class App extends Component {
               element={<FillingQuestionnaire />}
             />
             <Route path="/notImplemented" element={<NotImplemented />} />
-            <Route path="/appointments" element={<Appointments />} />
+            <Route
+              path="/appointments/:facilityId"
+              element={<Appointments />}
+            />
           </Routes>
         </div>
 

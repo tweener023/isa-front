@@ -16,6 +16,80 @@
   color: white;
 }
 
+.appointment-list {
+  margin-top: 3%;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: darkslategrey;
+}
+
+.appointment {
+  width: 300px;
+  margin: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: left;
+  padding: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.appointment:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.appointment h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
 .AppointmentH1 {
   margin-top: 10%;
+}
+
+.appointment p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.appointment button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00b8d4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.appointment button:hover {
+  background-color: #00e5ff;
+}
+
+.sort-button {
+  margin-bottom: 15px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 15px; /* Adjust font size to match the smaller buttons */
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sort-button.active {
+  background-color: #ccc;
+}
+
+.appointment .button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

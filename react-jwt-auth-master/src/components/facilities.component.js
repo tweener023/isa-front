@@ -112,13 +112,20 @@ export default function Facilities() {
 }
 
 function Facility({ facility, onSelect }) {
+  const handleAppointmentClick = () => {
+    onSelect(facility);
+  };
+
   return (
     <div className="facility" key={facility.centerId}>
       <h2>{facility.centerName}</h2>
       <p>{facility.centerAddress}</p>
       <div className="button-container">
-        <button onClick={() => onSelect(facility)}>See more</button>
-        <Link to={`/appointments`} className="btn btn-primary">
+        <button onClick={handleAppointmentClick}>See more</button>
+        <Link
+          to={`/appointments/${facility.centerId}`}
+          className="btn btn-primary"
+        >
           Appointments
         </Link>
       </div>
