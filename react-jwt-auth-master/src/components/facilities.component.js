@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/facilities.scss";
 import { Link } from "react-router-dom";
+import AuthService from "../services/auth.service";
+const currentUser = AuthService.getCurrentUser();
 
 export default function Facilities() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -122,12 +124,14 @@ function Facility({ facility, onSelect }) {
       <p>{facility.centerAddress}</p>
       <div className="button-container">
         <button onClick={handleAppointmentClick}>See more</button>
-        <Link
-          to={`/appointments/${facility.centerId}`}
-          className="btn btn-primary"
-        >
-          Appointments
-        </Link>
+        {currentUser && currentUser.roles.includes("ROLE_USER") && (
+          <Link
+            to={`/appointments/${facility.centerId}`}
+            className="btn btn-primary"
+          >
+            Appointments
+          </Link>
+        )}
       </div>
     </div>
   );
