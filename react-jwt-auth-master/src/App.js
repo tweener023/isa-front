@@ -14,6 +14,8 @@ import BoardMedic from "./components/board-medic.component";
 import BoardAdmin from "./components/board-admin.component";
 import HomeUser from "./components/homeUser.component";
 import FillingQuestionnaire from "./components/fillingQuestionnaire.component";
+import NotImplemented from "./components/notImplemented.component";
+import Appointments from "./components/appointments.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -105,30 +107,25 @@ class App extends Component {
             {currentUser && (
               <>
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
-                    User
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/notImplemented"} className="nav-link">
                     Past Visits
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/notImplemented"} className="nav-link">
                     Scheaduled Visits
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/notImplemented"} className="nav-link">
                     QR codes
                   </Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/notImplemented"} className="nav-link">
                     Penalties
                   </Link>
                 </li>
@@ -140,7 +137,7 @@ class App extends Component {
                 </li>
 
                 <li className="nav-item">
-                  <Link to={"/user"} className="nav-link">
+                  <Link to={"/notImplemented"} className="nav-link">
                     Write Complaint
                   </Link>
                 </li>
@@ -194,6 +191,8 @@ class App extends Component {
               path="/fillQuestionnaire"
               element={<FillingQuestionnaire />}
             />
+            <Route path="/notImplemented" element={<NotImplemented />} />
+            <Route path="/appointments" element={<Appointments />} />
           </Routes>
         </div>
 

@@ -1,122 +1,120 @@
-
 .Facilities {
-    text-align: center;
-    background-color: white;
-  }
-  
-  .App-header {
-    background-color: darkslategrey;
-    min-height: 40vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: top;
-    margin-top: 5%;
-    border-radius: 5px;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-header input[type="text"] {
-    width: 80%;
-    height: 40px;
-    font-size: 18px;
-    border: none;
-    border-radius: 5px;
-    padding: 0 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin-bottom: 10%;
-  }
-  
-  .facility-list {
-    margin-top: 3%;
-    border-radius: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
-    background-color: darkslategrey;
-  }
-  
-  .facility {
-    width: 300px;
-    margin: 20px;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    text-align: left;
-    padding: 20px;
-    transition: transform 0.2s ease-in-out;
-  }
-  
-  .facility:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-  }
-  
-  .facility h2 {
-    margin: 0;
-    font-size: 18px;
-  }
+  text-align: center;
+  background-color: white;
+}
 
-  
-  .FacilityH1 {
-    margin-top: 10%;
-  }
-  
-  .facility p {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #777;
-  }
-  
-  .facility button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    background-color: #00b8d4;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .facility button:hover {
-    background-color: #00e5ff;
-  }
-  
-  .facility-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .facility-detail {
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    text-align: left;
-    padding: 20px;
-    max-width: 600px;
-    width: 90%;
-  }
-  
-  .facility-detail h2 {
-    margin: 0;
-    font-size: 24px;
-  }
-  
-  .facility-detail p {
-    margin: 10px 0;
-    font-size: 16px;
+.App-header {
+  background-color: darkslategrey;
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  margin-top: 5%;
+  border-radius: 5px;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-header input[type="text"] {
+  width: 80%;
+  height: 40px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  padding: 0 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 10%;
+}
+
+.facility-list {
+  margin-top: 3%;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: darkslategrey;
+}
+
+.facility {
+  width: 300px;
+  margin: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: left;
+  padding: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.facility:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.facility h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.FacilityH1 {
+  margin-top: 10%;
+}
+
+.facility p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.facility button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00b8d4;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.facility button:hover {
+  background-color: #00e5ff;
+}
+
+.facility-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.facility-detail {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: left;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+}
+
+.facility-detail h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.facility-detail p {
+  margin: 10px 0;
+  font-size: 16px;
 }
 
 .facility-detail h3 {
@@ -150,7 +148,6 @@
   background-color: #00e5ff;
 }
 
-
 .sort-button {
   margin-bottom: 15px;
   margin-left: 10px;
@@ -164,4 +161,10 @@
 
 .sort-button.active {
   background-color: #ccc;
+}
+
+.facility .button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/facilities.scss";
+import { Link } from "react-router-dom";
 
 export default function Facilities() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -115,7 +116,12 @@ function Facility({ facility, onSelect }) {
     <div className="facility" key={facility.centerId}>
       <h2>{facility.centerName}</h2>
       <p>{facility.centerAddress}</p>
-      <button onClick={() => onSelect(facility)}>See more</button>
+      <div className="button-container">
+        <button onClick={() => onSelect(facility)}>See more</button>
+        <Link to={`/appointments`} className="btn btn-primary">
+          Appointments
+        </Link>
+      </div>
     </div>
   );
 }
