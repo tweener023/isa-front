@@ -181,7 +181,9 @@ class App extends Component {
         <div className="container mt-3">
           <Routes>
             <Route path="/" element={<Facilities />} />
-            <Route path="/homeUser" element={<HomeUser />} />
+            {currentUser && !showMedicBoard && !showAdminBoard && (
+              <Route path="/homeUser" element={<HomeUser />} />
+            )}
             <Route path="/facilities" element={<Facilities />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -189,7 +191,6 @@ class App extends Component {
             <Route path="/user" element={<BoardUser />} />
             <Route path="/medic" element={<BoardMedic />} />
             <Route path="/admin" element={<BoardAdmin />} />
-
             <Route
               path="/fillQuestionnaire"
               element={<FillingQuestionnaire />}
