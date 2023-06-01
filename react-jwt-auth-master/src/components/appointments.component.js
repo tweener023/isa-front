@@ -10,6 +10,7 @@ export default function Appointments() {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const { facilityId } = useParams();
   const token = AuthService.getJwt();
+  const [conflictMessage, setConflictMessage] = useState("");
 
   const fetchAppointments = async () => {
     try {
@@ -92,6 +93,10 @@ export default function Appointments() {
         if (response.ok) {
           console.log("Appointment added to user");
           fetchAppointments();
+        } else if (response.status === 409) {
+          setConflictMessage(
+            "You already have an appointment from the same facility."
+          );
         } else {
           console.log("Error adding appointment to user");
         }
@@ -120,6 +125,7 @@ export default function Appointments() {
           </button>
         </div>
       </header>
+      {conflictMessage && <p className="error-message">{conflictMessage}</p>}
       <div className="appointment-list">
         {appointments.map((appointment) => (
           <div

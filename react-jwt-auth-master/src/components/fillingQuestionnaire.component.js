@@ -23,17 +23,8 @@ export default class FillingQuestionnaire extends Component {
     this.handleSubmitQuestionnaire = this.handleSubmitQuestionnaire.bind(this);
     this.onChangeDateOfQuestionnaire =
       this.onChangeDateOfQuestionnaire.bind(this);
-    this.onChangeFirstName = this.onChangeFirstName.bind(this);
     this.onChangeParentName = this.onChangeParentName.bind(this);
-    this.onChangeLastName = this.onChangeLastName.bind(this);
-    this.onChangeJmbg = this.onChangeJmbg.bind(this);
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
-    this.onChangeGender = this.onChangeGender.bind(this);
-    this.onChangeAddress = this.onChangeAddress.bind(this);
-    this.onChangeCity = this.onChangeCity.bind(this);
-    this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
-    this.onChangeWorkplace = this.onChangeWorkplace.bind(this);
-    this.onChangeJob = this.onChangeJob.bind(this);
     this.onChangeTimesGiven = this.onChangeTimesGiven.bind(this);
     this.onChangeBloodType = this.onChangeBloodType.bind(this);
     this.onChangeAccepted = this.onChangeAccepted.bind(this);
@@ -74,6 +65,15 @@ export default class FillingQuestionnaire extends Component {
     if (currentUser && currentUser.id) {
       this.setState({
         user: currentUser.id,
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        jmbg: currentUser.jmbg,
+        gender: currentUser.gender,
+        address: currentUser.address,
+        city: currentUser.city,
+        phoneNumber: currentUser.phoneNumber,
+        workplace: currentUser.workplace,
+        job: currentUser.job,
       });
     } else {
       console.log("User not available.");
@@ -90,69 +90,15 @@ export default class FillingQuestionnaire extends Component {
     });
   }
 
-  onChangeFirstName(e) {
-    this.setState({
-      firstName: e.target.value,
-    });
-  }
-
   onChangeParentName(e) {
     this.setState({
       parentName: e.target.value,
     });
   }
 
-  onChangeLastName(e) {
-    this.setState({
-      lastName: e.target.value,
-    });
-  }
-
-  onChangeJmbg(e) {
-    this.setState({
-      jmbg: e.target.value,
-    });
-  }
-
   onChangeDateOfBirth(e) {
     this.setState({
       dateOfBirth: e.target.value,
-    });
-  }
-
-  onChangeGender(e) {
-    this.setState({
-      gender: e.target.value,
-    });
-  }
-
-  onChangeAddress(e) {
-    this.setState({
-      address: e.target.value,
-    });
-  }
-
-  onChangeCity(e) {
-    this.setState({
-      city: e.target.value,
-    });
-  }
-
-  onChangePhoneNumber(e) {
-    this.setState({
-      phoneNumber: e.target.value,
-    });
-  }
-
-  onChangeWorkplace(e) {
-    this.setState({
-      workplace: e.target.value,
-    });
-  }
-
-  onChangeJob(e) {
-    this.setState({
-      job: e.target.value,
     });
   }
 
@@ -303,8 +249,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="firstName"
                     value={this.state.firstName}
-                    onChange={this.onChangeFirstName}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -327,8 +272,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="lastName"
                     value={this.state.lastName}
-                    onChange={this.onChangeLastName}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -339,8 +283,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="jmbg"
                     value={this.state.jmbg}
-                    onChange={this.onChangeJmbg}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -363,8 +306,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="gender"
                     value={this.state.gender}
-                    onChange={this.onChangeGender}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -375,8 +317,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="address"
                     value={this.state.address}
-                    onChange={this.onChangeAddress}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -387,8 +328,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="city"
                     value={this.state.city}
-                    onChange={this.onChangeCity}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -399,8 +339,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="phoneNumber"
                     value={this.state.phoneNumber}
-                    onChange={this.onChangePhoneNumber}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -411,8 +350,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="workplace"
                     value={this.state.workplace}
-                    onChange={this.onChangeWorkplace}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -423,8 +361,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="job"
                     value={this.state.job}
-                    onChange={this.onChangeJob}
-                    validations={[required]}
+                    readOnly
                   />
                 </div>
 
@@ -509,17 +446,6 @@ export default class FillingQuestionnaire extends Component {
                     checked={this.state.donatedBlood}
                     onChange={this.onChangeDonatedBlood}
                     validations={[]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="user">User</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="user"
-                    value={this.state.user}
-                    readOnly
                   />
                 </div>
 
