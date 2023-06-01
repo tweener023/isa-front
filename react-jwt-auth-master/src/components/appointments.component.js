@@ -11,49 +11,52 @@ export default function Appointments() {
   const { facilityId } = useParams();
   const token = AuthService.getJwt();
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8080/api/test/appointments/byCenter/${facilityId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+  const fetchAppointments = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/test/appointments/byCenter/${facilityId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        const filteredAppointments = data.filter(
+          (appointment) => appointment.user.id === 5
         );
 
-        if (response.ok) {
-          const data = await response.json();
-          setAppointments(data);
-
-          // Sort the appointments
-          let sortedAppointments = data.slice();
-          if (sortBy === "date") {
-            sortedAppointments.sort((a, b) => {
-              const dateA = new Date(a.dateOfAppointment);
-              const dateB = new Date(b.dateOfAppointment);
-              return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-            });
-          } else if (sortBy === "time") {
-            sortedAppointments.sort((a, b) => {
-              const timeA = a.timeOfAppointment;
-              const timeB = b.timeOfAppointment;
-              return sortOrder === "asc"
-                ? timeA.localeCompare(timeB)
-                : timeB.localeCompare(timeA);
-            });
-          }
-
-          setAppointments(sortedAppointments);
-        } else {
-          console.log("Error fetching appointments");
+        // Sort the appointments
+        let sortedAppointments = filteredAppointments.slice();
+        if (sortBy === "date") {
+          sortedAppointments.sort((a, b) => {
+            const dateA = new Date(a.dateOfAppointment);
+            const dateB = new Date(b.dateOfAppointment);
+            return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+          });
+        } else if (sortBy === "time") {
+          sortedAppointments.sort((a, b) => {
+            const timeA = a.timeOfAppointment;
+            const timeB = b.timeOfAppointment;
+            return sortOrder === "asc"
+              ? timeA.localeCompare(timeB)
+              : timeB.localeCompare(timeA);
+          });
         }
-      } catch (error) {
-        console.error("Error fetching appointments", error);
-      }
-    };
 
+        setAppointments(sortedAppointments);
+      } else {
+        console.log("Error fetching appointments");
+      }
+    } catch (error) {
+      console.error("Error fetching appointments", error);
+    }
+  };
+
+  useEffect(() => {
     fetchAppointments();
   }, [facilityId, sortBy, sortOrder, token]);
 
@@ -88,6 +91,7 @@ export default function Appointments() {
       .then((response) => {
         if (response.ok) {
           console.log("Appointment added to user");
+          fetchAppointments();
         } else {
           console.log("Error adding appointment to user");
         }
