@@ -27,7 +27,6 @@ export default class FillingQuestionnaire extends Component {
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
     this.onChangeTimesGiven = this.onChangeTimesGiven.bind(this);
     this.onChangeBloodType = this.onChangeBloodType.bind(this);
-    this.onChangeAccepted = this.onChangeAccepted.bind(this);
     this.onChangeDrunkAlcohol = this.onChangeDrunkAlcohol.bind(this);
     this.onChangeHadTattoo = this.onChangeHadTattoo.bind(this);
     this.onChangeDangerousJob = this.onChangeDangerousJob.bind(this);
@@ -114,12 +113,6 @@ export default class FillingQuestionnaire extends Component {
     });
   }
 
-  onChangeAccepted(e) {
-    this.setState({
-      accepted: e.target.checked || false,
-    });
-  }
-
   onChangeDrunkAlcohol(e) {
     this.setState({
       drunkAlcohol: e.target.checked || false,
@@ -142,6 +135,12 @@ export default class FillingQuestionnaire extends Component {
     this.setState({
       donatedBlood: e.target.checked || false,
     });
+  }
+
+  calculateAccepted() {
+    const { drunkAlcohol, donatedBlood, hadTattoo } = this.state;
+    const accepted = !drunkAlcohol && !donatedBlood && !hadTattoo;
+    this.setState({ accepted });
   }
 
   handleSubmitQuestionnaire(e) {
@@ -396,7 +395,7 @@ export default class FillingQuestionnaire extends Component {
                     className="form-control"
                     name="accepted"
                     checked={this.state.accepted}
-                    onChange={this.onChangeAccepted}
+                    disabled
                     validations={[]}
                   />
                 </div>
