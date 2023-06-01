@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/appointments.scss";
+import AuthService from "../services/auth.service";
 
 export default function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -8,6 +9,7 @@ export default function Appointments() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const { facilityId } = useParams();
+  const token = AuthService.getJwt();
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/test/appointments/byCenter/${facilityId}`)
@@ -54,6 +56,29 @@ export default function Appointments() {
     setSelectedAppointment(null);
   };
 
+  const addAppointmentToUser = (appointment) => {
+    const currentUser = AuthService.getCurrentUser();
+    const userId = currentUser ? currentUser.id : null;
+    fetch(`http://localhost:8080/api/users/${userId}/appointments`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Appointment added to user");
+        } else {
+          console.log("Error adding appointment to user");
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding appointment to user", error);
+      });
+  };
+
   return (
     <div className="Appointments" id="appointments">
       <header className="App-header">
@@ -84,6 +109,9 @@ export default function Appointments() {
             <p>Facility: {appointment.facility.centerName}</p>
             <p>Date: {appointment.dateOfAppointment}</p>
             <p>Time: {appointment.timeOfAppointment}</p>
+            <button onClick={() => addAppointmentToUser(appointment)}>
+              Add to User
+            </button>
           </div>
         ))}
       </div>
