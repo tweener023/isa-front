@@ -182,24 +182,30 @@ class App extends Component {
           <Routes>
             <Route path="/" element={<Facilities />} />
             {currentUser && !showMedicBoard && !showAdminBoard && (
-              <Route path="/homeUser" element={<HomeUser />} />
+              <>
+                <Route path="/homeUser" element={<HomeUser />} />
+                <Route path="/user" element={<BoardUser />} />
+                <Route
+                  path="/fillQuestionnaire"
+                  element={<FillingQuestionnaire />}
+                />
+                <Route
+                  path="/appointments/:facilityId"
+                  element={<Appointments />}
+                />
+              </>
             )}
             <Route path="/facilities" element={<Facilities />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/user" element={<BoardUser />} />
-            <Route path="/medic" element={<BoardMedic />} />
-            <Route path="/admin" element={<BoardAdmin />} />
-            <Route
-              path="/fillQuestionnaire"
-              element={<FillingQuestionnaire />}
-            />
+            {currentUser && showMedicBoard && !showAdminBoard && (
+              <Route path="/medic" element={<BoardMedic />} />
+            )}
+            {currentUser && !showMedicBoard && showAdminBoard && (
+              <Route path="/admin" element={<BoardAdmin />} />
+            )}
             <Route path="/notImplemented" element={<NotImplemented />} />
-            <Route
-              path="/appointments/:facilityId"
-              element={<Appointments />}
-            />
           </Routes>
         </div>
 
