@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { Link, Route } from "react-router-dom";
+import { format } from "date-fns";
 
 import AuthService from "../services/auth.service";
 import questionnaireService from "../services/questionnaire.service";
@@ -21,8 +22,6 @@ export default class FillingQuestionnaire extends Component {
   constructor(props) {
     super(props);
     this.handleSubmitQuestionnaire = this.handleSubmitQuestionnaire.bind(this);
-    this.onChangeDateOfQuestionnaire =
-      this.onChangeDateOfQuestionnaire.bind(this);
     this.onChangeParentName = this.onChangeParentName.bind(this);
     this.onChangeDateOfBirth = this.onChangeDateOfBirth.bind(this);
     this.onChangeTimesGiven = this.onChangeTimesGiven.bind(this);
@@ -61,8 +60,12 @@ export default class FillingQuestionnaire extends Component {
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
+    const currentDate = new Date();
+    const formattedDate = format(currentDate, "yyyy-MM-dd");
+
     if (currentUser && currentUser.id) {
       this.setState({
+        dateOfQuestionnaire: formattedDate,
         user: currentUser.id,
         firstName: currentUser.firstName,
         lastName: currentUser.lastName,
@@ -81,12 +84,6 @@ export default class FillingQuestionnaire extends Component {
         successful: false,
       });
     }
-  }
-
-  onChangeDateOfQuestionnaire(e) {
-    this.setState({
-      dateOfQuestionnaire: e.target.value,
-    });
   }
 
   onChangeParentName(e) {
@@ -227,20 +224,6 @@ export default class FillingQuestionnaire extends Component {
           >
             {!this.state.successful && (
               <div>
-                <div className="form-group">
-                  <label htmlFor="dateOfQuestionnaire">
-                    Date Of Questionnaire
-                  </label>
-                  <Input
-                    type="date"
-                    className="form-control"
-                    name="dateOfQuestionnaire"
-                    value={this.state.dateOfQuestionnaire}
-                    onChange={this.onChangeDateOfQuestionnaire}
-                    validations={[required]}
-                  />
-                </div>
-
                 <div className="form-group">
                   <label htmlFor="firstName">First name</label>
                   <Input
