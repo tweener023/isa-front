@@ -97,6 +97,10 @@ export default function Appointments() {
           setConflictMessage(
             "You already have an appointment from the same facility."
           );
+        } else if (response.status === 403) {
+          setConflictMessage(
+            "You havent filled your questionnaire or you are not accepted."
+          );
         } else {
           console.log("Error adding appointment to user");
         }
@@ -133,8 +137,7 @@ export default function Appointments() {
             key={appointment.appointmentId}
             onClick={() => handleAppointmentSelect(appointment)}
           >
-            <h2>Appointment ID: {appointment.appointmentId}</h2>
-            <p>Facility: {appointment.facility.centerName}</p>
+            <h2>Facility: {appointment.facility.centerName}</h2>
             <p>Date: {appointment.dateOfAppointment}</p>
             <p>Time: {appointment.timeOfAppointment}</p>
             <button onClick={() => addAppointmentToUser(appointment)}>
