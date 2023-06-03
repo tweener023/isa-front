@@ -189,11 +189,18 @@ export default class FillingQuestionnaire extends Component {
                 error.response.data.message) ||
               error.message ||
               error.toString();
-
-            this.setState({
-              successful: false,
-              message: resMessage,
-            });
+            if (error.response && error.response.status === 403) {
+              this.setState({
+                successful: false,
+                message:
+                  "You already submitted your questionnaire, now you need to wait for it to expire.",
+              });
+            } else {
+              this.setState({
+                successful: false,
+                message: resMessage,
+              });
+            }
           }
         );
     }
