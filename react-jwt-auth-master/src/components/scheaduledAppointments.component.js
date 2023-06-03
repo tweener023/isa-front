@@ -73,6 +73,31 @@ export default function ScheaduledAppointments() {
     setSelectedAppointment(null);
   };
 
+  const cancelAppointment = async (appointment) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/appointments/${appointment.appointmentId}/user`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Appointment canceled successfully
+        // You may want to update the appointments list by fetching the updated data
+        fetchAppointments();
+      } else {
+        console.log("Error canceling appointment");
+      }
+    } catch (error) {
+      console.error("Error canceling appointment", error);
+    }
+  };
+
   return (
     <div className="Appointments" id="appointments">
       <header className="App-header">
@@ -98,11 +123,14 @@ export default function ScheaduledAppointments() {
           <div
             className="appointment"
             key={appointment.appointmentId}
-            onClick={() => handleAppointmentSelect(appointment)}
+            onClick={() => cancelAppointment(appointment)}
           >
             <h2>Facility: {appointment.facility.centerName}</h2>
             <p>Date: {appointment.dateOfAppointment}</p>
             <p>Time: {appointment.timeOfAppointment}</p>
+            <button onClick={() => cancelAppointment(appointment)}>
+              Cancel Appointment
+            </button>
           </div>
         ))}
       </div>
