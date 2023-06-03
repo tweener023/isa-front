@@ -16,6 +16,8 @@ import HomeUser from "./components/homeUser.component";
 import FillingQuestionnaire from "./components/fillingQuestionnaire.component";
 import NotImplemented from "./components/notImplemented.component";
 import Appointments from "./components/appointments.component";
+import PreviousAppointments from "./components/previousAppointments.component";
+import ScheaduledAppointments from "./components/scheaduledAppointments.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -110,13 +112,19 @@ class App extends Component {
               currentUser.roles.includes("ROLE_USER") && (
                 <>
                   <li className="nav-item">
-                    <Link to={"/notImplemented"} className="nav-link">
+                    <Link
+                      to={`/previousAppointments/${currentUser.id}`}
+                      className="nav-link"
+                    >
                       Past Visits
                     </Link>
                   </li>
 
                   <li className="nav-item">
-                    <Link to={"/notImplemented"} className="nav-link">
+                    <Link
+                      to={`/scheaduledAppointments/${currentUser.id}`}
+                      className="nav-link"
+                    >
                       Scheduled Visits
                     </Link>
                   </li>
@@ -192,6 +200,14 @@ class App extends Component {
                 <Route
                   path="/appointments/:facilityId"
                   element={<Appointments />}
+                />
+                <Route
+                  path="/previousAppointments/:userId"
+                  element={<PreviousAppointments />}
+                />
+                <Route
+                  path="/scheaduledAppointments/:userId"
+                  element={<ScheaduledAppointments />}
                 />
               </>
             )}
