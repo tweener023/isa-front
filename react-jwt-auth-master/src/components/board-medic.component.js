@@ -10,6 +10,9 @@ Modal.setAppElement("#root");
 export default class BoardMedic extends Component {
   constructor(props) {
     super(props);
+    this.handleNewAppointment = this.handleNewAppointment.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.state = {
       content: "",
       appointments: [],
@@ -68,11 +71,11 @@ export default class BoardMedic extends Component {
   handleNewAppointment = (e) => {
     e.preventDefault();
     const currentUser = AuthService.getCurrentUser();
-    const { date } = this.state;
+    const { date, time } = this.state;
 
     const newAppointment = {
-      dateOfAppointment: date,
-      timeOfAppointment: "14:30:00", // Assuming a fixed time for now
+      dateOfAppointment: new Date(date).toISOString().split('T')[0],
+      timeOfAppointment: time,
     };
 
     UserService.createNewAppointment(
@@ -118,8 +121,11 @@ export default class BoardMedic extends Component {
   };
 
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
+  
 
   render() {
     const { content, appointments, modalIsOpen, date, time } = this.state;
@@ -158,7 +164,7 @@ export default class BoardMedic extends Component {
               </tr>
             </tbody>
           </table>
-          <h3 className="fac-name">Facility appointments</h3>
+          <h3 className="fac-name">Facility Appointments</h3>
           <table>
             <thead>
               <tr>
