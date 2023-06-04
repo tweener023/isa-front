@@ -90,6 +90,10 @@ export default function ScheaduledAppointments() {
         // Appointment canceled successfully
         // You may want to update the appointments list by fetching the updated data
         fetchAppointments();
+      } else if (response.status === 403) {
+        const message = await response.text();
+        console.log("Appointment cancellation forbidden:", message);
+        setConflictMessage(message);
       } else {
         console.log("Error canceling appointment");
       }
