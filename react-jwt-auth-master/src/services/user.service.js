@@ -34,12 +34,11 @@ class UserService {
     return axios.get(`http://localhost:8080/api/appointments/facility/${centerId}`, {headers});
   }
 
-   createNewAppointment(date, center) {
+   createNewAppointment(facilityId, appointment) {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const token = currentUser.token;
-    const userId = currentUser.userId;
     //const centerName = center.centerName;
-    return axios.post("http://localhost:8080/api/appointments/", {userId, date}, {
+    return axios.post("http://localhost:8080/api/appointments/" + facilityId + '/' + currentUser.id+'/addAppointment', {appointment}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'

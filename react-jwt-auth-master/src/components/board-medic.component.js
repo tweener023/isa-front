@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
 import AuthService from "../services/auth.service";
-import Modal from "react-modal"
-import axios from "axios";
+import Modal from "react-modal";
 import "../styles/myfacilities.scss";
-Modal.setAppElement('#root'); 
 
+Modal.setAppElement("#root");
 
 export default class BoardMedic extends Component {
   constructor(props) {
     super(props);
-    this.handleNewAppointment = this.handleNewAppointment.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.state = {
       content: "",
+      appointments: [],
+      modalIsOpen: false,
+      date: "",
+      time: "",
     };
   }
+
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
@@ -68,40 +68,72 @@ export default class BoardMedic extends Component {
   handleNewAppointment = (e) => {
     e.preventDefault();
     const currentUser = AuthService.getCurrentUser();
-
     const { date } = this.state;
-    const {center} = UserService.getFacilityByMedic(currentUser.id, currentUser.token);
-    UserService.createNewAppointment(date, center).then((response) => {
-        console.log(response)
-    }).catch((error) => {
-        console.log(error)
-    });
+
+    const newAppointment = {
+      dateOfAppointment: date,
+      timeOfAppointment: "14:30:00", // Assuming a fixed time for now
+    };
+
+    UserService.createNewAppointment(
+      this.state.content.centerId,
+      newAppointment
+    )
+      .then((response) => {
+        console.log(response);
+        this.setState({ modalIsOpen: false }); // Close the modal
+        // Retrieve updated appointments
+        UserService.getAppointmentsByFacility(
+          this.state.content.centerId,
+          currentUser.token
+        ).then(
+          (response) => {
+            this.setState({
+              appointments: response.data,
+            });
+          },
+          (error) => {
+            this.setState({
+              appointments:
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString(),
+            });
+          }
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   handleOpenModal = () => {
     this.setState({ modalIsOpen: true });
   };
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+
   handleCloseModal = () => {
     this.setState({ modalIsOpen: false });
   };
-  handleOpenModal = () => {
-    this.setState({ modalIsOpen: true });
+
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
     const { content, appointments, modalIsOpen, date, time } = this.state;
     const customStyles = {
-      content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-50%',
-        transform             : 'translate(-50%, -50%)'
-      }
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+      },
     };
+
     return (
       <div className="container-my-fac">
         <header className="jumbotron-my-fac">
@@ -160,42 +192,40 @@ export default class BoardMedic extends Component {
             </tbody>
           </table>
           <button onClick={this.handleOpenModal}>New Appointment</button>
-          <div id = "root">
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={this.handleCloseModal}
-          style={customStyles}
-          contentLabel="New Appointment"
-        >
-          <h2>New Appointment</h2>
-          <form onSubmit={this.handleNewAppointment}>
-            <label>
-              Date:
-              <input
-                type="date"
-                value={date}
-                onChange={this.handleChange}
-                name="date"
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Time:
-              <input
-                type="time"
-                value={time}
-                onChange={this.handleChange}
-                name="time"
-                required
-              />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
-            <button onClick={this.handleCloseModal}>Close</button>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={this.handleCloseModal}
+            style={customStyles}
+            contentLabel="New Appointment"
+          >
+            <h2>New Appointment</h2>
+            <form onSubmit={this.handleNewAppointment}>
+              <label>
+                Date:
+                <input
+                  type="date"
+                  value={date}
+                  onChange={this.handleChange}
+                  name="date"
+                  required
+                />
+              </label>
+              <br />
+              <label>
+                Time:
+                <input
+                  type="time"
+                  value={time}
+                  onChange={this.handleChange}
+                  name="time"
+                  required
+                />
+              </label>
+              <br />
+              <input type="submit" value="Submit" />
+              <button onClick={this.handleCloseModal}>Close</button>
             </form>
-        </Modal>
-       </div> 
+          </Modal>
         </header>
       </div>
     );

@@ -76,7 +76,8 @@ export default function Facilities() {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <button
+
+          <button 
             className={`sort-button ${sortBy === "name" ? "active" : ""}`}
             onClick={() => handleSort("name")}
           >
