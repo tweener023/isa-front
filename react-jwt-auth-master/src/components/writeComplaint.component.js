@@ -32,6 +32,7 @@ export default function WriteComplaint() {
     userId: currentUserId,
     facilityId: "",
     complaintText: "",
+    directedTo: "",
   });
 
   const handleChange = (e) => {
@@ -77,7 +78,18 @@ export default function WriteComplaint() {
       <h1>Write Complaint</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="facilityId">Facility ID:</label>
+          <label htmlFor="directedTo">Directed To:</label>
+          <select
+            id="directedTo"
+            name="directedTo"
+            value={complaintData.directedTo}
+            onChange={handleChange}
+          >
+            <option value="">Select Directed To</option>
+            <option value="FACILITY">Facility</option>
+            <option value="STAFF">Staff</option>
+          </select>
+          <label htmlFor="facilityId">Facility Name:</label>
           <select
             id="facilityId"
             name="facilityId"
