@@ -18,6 +18,7 @@ import NotImplemented from "./components/notImplemented.component";
 import Appointments from "./components/appointments.component";
 import PreviousAppointments from "./components/previousAppointments.component";
 import ScheaduledAppointments from "./components/scheaduledAppointments.component";
+import WriteComplaint from "./components/writeComplaint.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -148,7 +149,7 @@ class App extends Component {
                   </li>
 
                   <li className="nav-item">
-                    <Link to={"/notImplemented"} className="nav-link">
+                    <Link to={"/writeComplaint"} className="nav-link">
                       Write Complaint
                     </Link>
                   </li>
@@ -209,6 +210,7 @@ class App extends Component {
                   path="/scheaduledAppointments/:userId"
                   element={<ScheaduledAppointments />}
                 />
+                <Route path="/writeComplaint" element={<WriteComplaint />} />
               </>
             )}
             <Route path="/facilities" element={<Facilities />} />

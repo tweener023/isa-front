@@ -63,7 +63,7 @@ const HomeUser = () => {
       </div>
       <div className="button-container">
         <Link
-          to="/notImplemented"
+          to="/writeComplaint"
           className="btn btn-primary btn-lg menu-button"
         >
           Write Complaint
