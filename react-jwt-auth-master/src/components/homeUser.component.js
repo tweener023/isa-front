@@ -69,6 +69,14 @@ const HomeUser = () => {
           Write Complaint
         </Link>
       </div>
+      <div className="button-container">
+        <Link
+          to={`/sentComplaints/${userId}`}
+          className="btn btn-primary btn-lg menu-button"
+        >
+          Sent Complaints
+        </Link>
+      </div>
     </div>
   );
 };
