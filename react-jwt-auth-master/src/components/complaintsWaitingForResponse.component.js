@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import authService from "../services/auth.service";
+import "../styles/complaintsWaitingForResponse.scss";
 
 export default function ComplaintsWaitingForResponse() {
   const { userId } = useParams();
   const [complaints, setComplaints] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [answerText, setAnswerText] = useState("");
   const token = authService.getJwt();
   const user = authService.getCurrentUser();
   const userFirstName = user.firstName;
@@ -30,29 +34,77 @@ export default function ComplaintsWaitingForResponse() {
     fetchComplaints();
   }, [userId]);
 
+  const handleOpenPopup = (complaint) => {
+    setSelectedComplaint(complaint);
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedComplaint(null);
+    setAnswerText("");
+    setShowPopup(false);
+  };
+
+  const handleAnswerSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/answers/answer",
+        {
+          complaintId: selectedComplaint.complaintId,
+          answerToComplaintText: answerText,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("Answer submitted successfully:", response.data);
+
+      handleClosePopup();
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error submitting answer:", error);
+    }
+  };
+
   return (
     <div className="fillingComplaint">
       <h1 style={{ marginBottom: "5rem" }}>Complaints Waiting For Response</h1>
-      <ul style={{ listStyle: "none", padding: "0" }}>
+      <div className="complaintsContainer">
         {complaints.map((complaint) => (
-          <li key={complaint.complaintId} style={{ marginBottom: "3rem" }}>
-            <div
-              style={{
-                display: "inline-block",
-                padding: "10px",
-                borderRadius: "20px",
-                background: "#4287f5",
-                color: "#ffffff",
-              }}
+          <div key={complaint.complaintId} className="complaint">
+            <div className="complaintHeader">Complaint</div>
+            <div className="complaintText">{complaint.complaintText}</div>
+            <button
+              onClick={() => handleOpenPopup(complaint)}
+              style={{ marginTop: "1rem" }}
             >
-              <div style={{ fontWeight: "bold" }}>
-                Complaint {complaint.complaintId}
-              </div>
-              <div>{complaint.complaintText}</div>{" "}
-            </div>
-          </li>
+              Answer Complaint
+            </button>
+          </div>
         ))}
-      </ul>
+      </div>
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Answer To Complaint</h2>
+            <div>
+              <textarea
+                id="answerText"
+                value={answerText}
+                onChange={(e) => setAnswerText(e.target.value)}
+              ></textarea>
+            </div>
+            <div>
+              <button onClick={handleAnswerSubmit}>Submit</button>
+              <button onClick={handleClosePopup}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

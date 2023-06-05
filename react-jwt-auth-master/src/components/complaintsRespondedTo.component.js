@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import authService from "../services/auth.service";
-import "../styles/sentComplaints.scss";
+import "../styles/complaintsRespondedTo.scss";
 
-export default function SentComplaints() {
+export default function ComplaintsRespondedTo() {
   const { userId } = useParams();
   const [complaints, setComplaints] = useState([]);
-  const [answers, setAnswers] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [answerText, setAnswerText] = useState("");
   const token = authService.getJwt();
   const user = authService.getCurrentUser();
   const userFirstName = user.firstName;
@@ -16,7 +18,7 @@ export default function SentComplaints() {
     const fetchComplaints = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/complaints?userId=${userId}`,
+          `http://localhost:8080/api/complaints/respondedTo`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -24,32 +26,8 @@ export default function SentComplaints() {
           }
         );
         setComplaints(response.data);
-        for (const complaint of response.data) {
-          if (complaint.statusOfComplaint === "RESPONDED_TO") {
-            fetchAnswer(complaint.complaintId);
-          }
-        }
       } catch (error) {
         console.error("Error fetching complaints:", error);
-      }
-    };
-
-    const fetchAnswer = async (complaintId) => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/api/answers/byComplaint?complaintId=${complaintId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setAnswers((prevAnswers) => ({
-          ...prevAnswers,
-          [complaintId]: response.data.answerToComplaintText,
-        }));
-      } catch (error) {
-        console.error("Error fetching answer:", error);
       }
     };
 
@@ -66,15 +44,6 @@ export default function SentComplaints() {
           <div key={complaint.complaintId} className="complaint">
             <div className="complaintHeader">Complaint</div>
             <div className="complaintText">{complaint.complaintText}</div>
-            {complaint.statusOfComplaint === "RESPONDED_TO" && (
-              <div className="answerToComplaint">
-                <label></label>
-                <span className="complaintHeader">Answer:</span>
-                <div className="answerText">
-                  {answers[complaint.complaintId]}
-                </div>
-              </div>
-            )}
           </div>
         ))}
       </div>

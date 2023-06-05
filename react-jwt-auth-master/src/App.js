@@ -21,6 +21,7 @@ import ScheaduledAppointments from "./components/scheaduledAppointments.componen
 import WriteComplaint from "./components/writeComplaint.component";
 import SentComplaints from "./components/sentComplaints.component";
 import ComplaintsWaitingForResponse from "./components/complaintsWaitingForResponse.component";
+import ComplaintsRespondedTo from "./components/complaintsRespondedTo.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -114,6 +115,11 @@ class App extends Component {
                     className="nav-link"
                   >
                     Complaints Waiting For Response
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/complaintsRespondedTo"} className="nav-link">
+                    Complaints Responded To
                   </Link>
                 </li>
               </>
@@ -251,6 +257,10 @@ class App extends Component {
                 <Route
                   path="/complaintsWaitingForResponse"
                   element={<ComplaintsWaitingForResponse />}
+                />
+                <Route
+                  path="/complaintsRespondedTo"
+                  element={<ComplaintsRespondedTo />}
                 />
               </>
             )}
