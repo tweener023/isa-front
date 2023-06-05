@@ -19,6 +19,7 @@ export default class BoardMedic extends Component {
       modalIsOpen: false,
       date: "",
       time: "",
+      errorMessage: "",
     };
   }
 
@@ -73,8 +74,32 @@ export default class BoardMedic extends Component {
     const currentUser = AuthService.getCurrentUser();
     const { date, time } = this.state;
 
+    // Validate the time and day
+    const selectedDate = new Date(date);
+    const selectedTime = new Date(`2000-01-01T${time}`);
+    const selectedDay = selectedDate.getDay(); // Sunday is 0, Saturday is 6
+
+    const isValidTime = selectedTime.getHours() >= 7 && selectedTime.getHours() <= 18;
+    const isWeekday = selectedDay >= 1 && selectedDay <= 5;
+
+    if (!isValidTime || !isWeekday) {
+      // Display an error message
+      let errorMessage = "";
+      if (!isValidTime) {
+        errorMessage = "Invalid time! Please select a time between 07:00 and 18:59.";
+      } else if (!isWeekday) {
+        errorMessage = "Invalid day! Please select a weekday.";
+      }
+
+      this.setState({
+        errorMessage,
+      });
+
+      return;
+    }
+
     const newAppointment = {
-      dateOfAppointment: new Date(date).toISOString().split('T')[0],
+      dateOfAppointment: selectedDate.toISOString().split("T")[0],
       timeOfAppointment: time,
     };
 
@@ -84,7 +109,7 @@ export default class BoardMedic extends Component {
     )
       .then((response) => {
         console.log(response);
-        this.setState({ modalIsOpen: false }); // Close the modal
+        this.setState({ modalIsOpen: false, errorMessage: "" }); // Close the modal and reset error message
         // Retrieve updated appointments
         UserService.getAppointmentsByFacility(
           this.state.content.centerId,
@@ -117,7 +142,7 @@ export default class BoardMedic extends Component {
   };
 
   handleCloseModal = () => {
-    this.setState({ modalIsOpen: false });
+    this.setState({ modalIsOpen: false, errorMessage: "" });
   };
 
   handleChange = (e) => {
@@ -125,10 +150,9 @@ export default class BoardMedic extends Component {
       [e.target.name]: e.target.value,
     });
   };
-  
 
   render() {
-    const { content, appointments, modalIsOpen, date, time } = this.state;
+    const { content, appointments, modalIsOpen, date, time, errorMessage } = this.state;
     const customStyles = {
       content: {
         top: "50%",
@@ -171,6 +195,7 @@ export default class BoardMedic extends Component {
                 <th>Appointment ID</th>
                 <th>Patient Name</th>
                 <th>Appointment Date</th>
+                <th>Appointment Time</th>
                 <th>Facility Name</th>
                 <th>Facility Address</th>
               </tr>
@@ -181,11 +206,14 @@ export default class BoardMedic extends Component {
                   <tr key={appointment.appointmentId}>
                     <td>{appointment.appointmentId}</td>
                     <td>
-                      {appointment.user
-                        ? `${appointment.user.firstName} ${appointment.user.lastName}`
-                        : "Not taken"}
+                      {appointment.user &&
+                      appointment.user.firstName === "Zoki" &&
+                      appointment.user.lastName === "Jankov"
+                        ? "Not taken"
+                        : `${appointment.user.firstName} ${appointment.user.lastName}`}
                     </td>
-                    <td>{appointment.date}</td>
+                    <td>{appointment.dateOfAppointment}</td>
+                    <td>{appointment.timeOfAppointment}</td>
                     <td>{appointment.facility.centerName}</td>
                     <td>{appointment.facility.centerAddress}</td>
                   </tr>
@@ -228,6 +256,7 @@ export default class BoardMedic extends Component {
                 />
               </label>
               <br />
+              {errorMessage && <p className="error-message">{errorMessage}</p>}
               <input type="submit" value="Submit" />
               <button onClick={this.handleCloseModal}>Close</button>
             </form>
