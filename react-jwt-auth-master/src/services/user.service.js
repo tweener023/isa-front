@@ -40,7 +40,7 @@ class UserService {
     //const centerName = center.centerName;
     console.log("ovo je appointment "+ JSON.stringify(appointment));
     
-    return axios.post("http://localhost:8080/api/appointments/" + facilityId + '/' + currentUser.id+'/addAppointment', {appointment}, {
+    return axios.post("http://localhost:8080/api/appointments/" + facilityId + '/' + currentUser.id+'/addAppointment', appointment, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
