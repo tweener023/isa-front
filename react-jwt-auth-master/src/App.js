@@ -20,6 +20,7 @@ import PreviousAppointments from "./components/previousAppointments.component";
 import ScheaduledAppointments from "./components/scheaduledAppointments.component";
 import WriteComplaint from "./components/writeComplaint.component";
 import SentComplaints from "./components/sentComplaints.component";
+import ComplaintsWaitingForResponse from "./components/complaintsWaitingForResponse.component";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -101,11 +102,21 @@ class App extends Component {
             )}
 
             {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link to={"/admin"} className="nav-link">
+                    Admin Board
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    to={"/complaintsWaitingForResponse"}
+                    className="nav-link"
+                  >
+                    Complaints Waiting For Response
+                  </Link>
+                </li>
+              </>
             )}
 
             {currentUser &&
@@ -235,7 +246,13 @@ class App extends Component {
               <Route path="/medic" element={<BoardMedic />} />
             )}
             {currentUser && !showMedicBoard && showAdminBoard && (
-              <Route path="/admin" element={<BoardAdmin />} />
+              <>
+                <Route path="/admin" element={<BoardAdmin />} />
+                <Route
+                  path="/complaintsWaitingForResponse"
+                  element={<ComplaintsWaitingForResponse />}
+                />
+              </>
             )}
             <Route path="/notImplemented" element={<NotImplemented />} />
           </Routes>
