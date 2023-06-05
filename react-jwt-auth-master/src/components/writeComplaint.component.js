@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import authService from "../services/auth.service";
+import "../styles/fillingComplaint.scss";
 
 export default function WriteComplaint() {
   const currentUserId = authService.getCurrentUserId();
@@ -74,46 +75,55 @@ export default function WriteComplaint() {
   };
 
   return (
-    <div>
+    <div className="fillingComplaint">
       <h1>Write Complaint</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="directedTo">Directed To:</label>
-          <select
-            id="directedTo"
-            name="directedTo"
-            value={complaintData.directedTo}
-            onChange={handleChange}
-          >
-            <option value="">Select Directed To</option>
-            <option value="FACILITY">Facility</option>
-            <option value="STAFF">Staff</option>
-          </select>
-          <label htmlFor="facilityId">Facility Name:</label>
-          <select
-            id="facilityId"
-            name="facilityId"
-            value={complaintData.facilityId}
-            onChange={handleChange}
-          >
-            <option value="">Select Facility</option>
-            {pastFacilities.map((facility) => (
-              <option key={facility.centerId} value={facility.centerId}>
-                {facility.centerName}
-              </option>
-            ))}
-          </select>
+        <div className="select-row">
+          <div className="select-wrapper">
+            <label htmlFor="directedTo">Directed To:</label>
+            <select
+              id="directedTo"
+              name="directedTo"
+              value={complaintData.directedTo}
+              onChange={handleChange}
+            >
+              <option value="">Select Directed To</option>
+              <option value="FACILITY">Facility</option>
+              <option value="STAFF">Staff</option>
+            </select>
+          </div>
+          <div className="select-wrapper">
+            <label htmlFor="facilityId">Facility Name:</label>
+            <select
+              id="facilityId"
+              name="facilityId"
+              value={complaintData.facilityId}
+              onChange={handleChange}
+            >
+              <option value="">Select Facility</option>
+              {pastFacilities.map((facility) => (
+                <option key={facility.centerId} value={facility.centerId}>
+                  {facility.centerName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div>
+        <div className="textarea-wrapper">
           <label htmlFor="complaintText">Complaint Text:</label>
           <textarea
             id="complaintText"
             name="complaintText"
             value={complaintData.complaintText}
             onChange={handleChange}
+            className="custom-textarea"
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
+        <div className="button-wrapper">
+          <button type="submit" className="custom-button">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
