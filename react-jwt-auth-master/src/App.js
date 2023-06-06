@@ -22,6 +22,7 @@ import WriteComplaint from "./components/writeComplaint.component";
 import SentComplaints from "./components/sentComplaints.component";
 import ComplaintsWaitingForResponse from "./components/complaintsWaitingForResponse.component";
 import ComplaintsRespondedTo from "./components/complaintsRespondedTo.component";
+import Analytics from "./components/analytics.components";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -95,11 +96,18 @@ class App extends Component {
             </li>
 
             {showMedicBoard && (
+              <>
               <li className="nav-item">
                 <Link to={"/medic"} className="nav-link">
                   My Facility
                 </Link>
               </li>
+              <li className="nav-item">
+              <Link to={"/analytics"} className="nav-link">
+                Facility Analytics
+              </Link>
+            </li>
+            </>
             )}
 
             {showAdminBoard && (
@@ -249,7 +257,10 @@ class App extends Component {
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
             {currentUser && showMedicBoard && !showAdminBoard && (
-              <Route path="/medic" element={<BoardMedic />} />
+              <>
+               <Route path="/medic" element={<BoardMedic />} />
+               <Route path="/analytics" element={<Analytics />} />
+              </>
             )}
             {currentUser && !showMedicBoard && showAdminBoard && (
               <>

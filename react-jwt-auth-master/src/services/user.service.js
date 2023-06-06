@@ -47,6 +47,9 @@ class UserService {
       }
     });
   }
+  getAnalytics(centerId) {
+    return axios.get(`http://localhost:8080/api/analytics/${centerId}/getAnalytics`, { headers: authHeader() });
+  }
 }
 
 export default new UserService();
