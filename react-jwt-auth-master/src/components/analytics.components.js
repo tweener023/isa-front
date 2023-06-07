@@ -169,7 +169,38 @@ const AnalyticsComponent = () => {
   return (
     <div className="container">
       <h2 className="heading">Analytics</h2>
-
+      <div className="container">
+      <p>
+        <span className="bold-label">Average Grade:</span> {analyticsData.averageGrade}
+      </p>
+      <p>
+        <span className="bold-label">Appointments Last Month:</span> {analyticsData.appointmentsLastMonth}
+      </p>
+      <p>
+        <span className="bold-label">Appointments Last Year:</span> {analyticsData.appointmentsLastYear}
+      </p>
+      <p>
+        <span className="bold-label">Appointments Total:</span> {analyticsData.appointmentsTotal}
+      </p>
+      <p>
+        <span className="bold-label">Supplies Last Month:</span> {analyticsData.suppliesLastMonth}
+      </p>
+      <p>
+        <span className="bold-label">Supplies Last Year:</span> {analyticsData.suppliesLastYear}
+      </p>
+      <p>
+        <span className="bold-label">Supplies Total:</span> {analyticsData.suppliesTotal}
+      </p>
+      <p>
+        <span className="bold-label">Equipment Last Month:</span> {analyticsData.equipmentLastMonth}
+      </p>
+      <p>
+        <span className="bold-label">Equipment Last Year:</span> {analyticsData.equipmentLastYear}
+      </p>
+      <p>
+        <span className="bold-label">Equipment Total:</span> {analyticsData.equipmentTotal}
+      </p>
+      </div>
       <div className="graph-container">
         <h4 className="appointmentsHeader">Appointments</h4>
         <canvas id="appointmentsGraph" width="400" height="150"></canvas>
