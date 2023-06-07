@@ -169,7 +169,7 @@ const AnalyticsComponent = () => {
   return (
     <div className="container">
       <h2 className="heading">Analytics</h2>
-      <div className="container">
+      <div className="-info-container">
       <p>
         <span className="bold-label">Average Grade:</span> {analyticsData.averageGrade}
       </p>

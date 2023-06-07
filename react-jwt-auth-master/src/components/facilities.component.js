@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/facilities.scss";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
+
 const currentUser = AuthService.getCurrentUser();
 
 export default function Facilities() {
@@ -63,6 +64,10 @@ export default function Facilities() {
         ? a.centerSupplies - b.centerSupplies
         : b.centerSupplies - a.centerSupplies;
     });
+  } else if (sortBy === "grade") {
+    sortedFacilities.sort((a, b) => {
+      return sortOrder === "asc" ? a.grade - b.grade : b.grade - a.grade;
+    });
   }
 
   return (
@@ -77,7 +82,7 @@ export default function Facilities() {
             onChange={handleSearchChange}
           />
 
-          <button 
+          <button
             className={`sort-button ${sortBy === "name" ? "active" : ""}`}
             onClick={() => handleSort("name")}
           >
@@ -88,6 +93,12 @@ export default function Facilities() {
             onClick={() => handleSort("supplies")}
           >
             Sort by Supplies
+          </button>
+          <button
+            className={`sort-button ${sortBy === "grade" ? "active" : ""}`}
+            onClick={() => handleSort("grade")}
+          >
+            Sort by Grade
           </button>
         </div>
       </header>
@@ -122,7 +133,8 @@ function Facility({ facility, onSelect }) {
   return (
     <div className="facility" key={facility.centerId}>
       <h2>{facility.centerName}</h2>
-      <p>{facility.centerAddress}</p>
+      <p>Address: {facility.centerAddress}</p>
+      <p>Grade: {facility.grade}</p>
       <div className="button-container">
         <button onClick={handleAppointmentClick}>See more</button>
         {currentUser && currentUser.roles.includes("ROLE_USER") && (
