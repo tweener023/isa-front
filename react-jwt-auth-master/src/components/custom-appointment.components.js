@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "../styles/customAppointment.scss";
 import axios from 'axios';
+import ErrorWindow from './error-window.component';
+import AuthService from '../services/auth.service';
 
 
 
@@ -24,7 +26,12 @@ const CustomAppointmentForm = () => {
     const selectedHour = selectedTime.getHours();
     const isTimeValid = selectedHour >= 9 && selectedHour <= 19;
   
-    if (isWeekend) {
+    const currentUser = AuthService.getCurrentUser();
+    const hasFilledQuestionnaire = currentUser.filledQuestionnaire;
+  
+    if (!hasFilledQuestionnaire) {
+      setFeedback('Please fill out the questionnaire before making custom appointment. You can do it on Fill questionnaire tab.');
+    } else if (isWeekend) {
       setFeedback('Please select a date that is not on a weekend.');
     } else if (isCurrentOrPastDay) {
       setFeedback('Please select a date that is not today or a day before.');
@@ -48,7 +55,7 @@ const CustomAppointmentForm = () => {
         });
     }
   };
-
+  
   const isFormValid = date && time;
 
   return (
@@ -87,7 +94,8 @@ const CustomAppointmentForm = () => {
           </button>
         </form>
 
-        {feedback && <p className="feedback">{feedback}</p>}
+        {feedback && <ErrorWindow message={feedback} />}
+
       </div>
 
       {facilities.length > 0 && (
