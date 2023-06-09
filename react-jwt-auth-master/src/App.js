@@ -23,6 +23,7 @@ import SentComplaints from "./components/sentComplaints.component";
 import ComplaintsWaitingForResponse from "./components/complaintsWaitingForResponse.component";
 import ComplaintsRespondedTo from "./components/complaintsRespondedTo.component";
 import Analytics from "./components/analytics.components";
+import CustomAppointment from "./components/custom-appointment.components";
 
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
@@ -97,17 +98,17 @@ class App extends Component {
 
             {showMedicBoard && (
               <>
-              <li className="nav-item">
-                <Link to={"/medic"} className="nav-link">
-                  My Facility
-                </Link>
-              </li>
-              <li className="nav-item">
-              <Link to={"/analytics"} className="nav-link">
-                Facility Analytics
-              </Link>
-            </li>
-            </>
+                <li className="nav-item">
+                  <Link to={"/medic"} className="nav-link">
+                    My Facility
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/analytics"} className="nav-link">
+                    Facility Analytics
+                  </Link>
+                </li>
+              </>
             )}
 
             {showAdminBoard && (
@@ -182,6 +183,15 @@ class App extends Component {
 
                   <li className="nav-item">
                     <Link
+                      to={`/customAppointment/${currentUser.id}`}
+                      className="nav-link"
+                    >
+                      Custom Appointment
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link
                       to={`/sentComplaints/${currentUser.id}`}
                       className="nav-link"
                     >
@@ -250,6 +260,10 @@ class App extends Component {
                   path="/sentComplaints/:userId"
                   element={<SentComplaints />}
                 />
+                <Route
+                  path="/customAppointment/:userId"
+                  element={<CustomAppointment />}
+                />
               </>
             )}
             <Route path="/facilities" element={<Facilities />} />
@@ -258,8 +272,8 @@ class App extends Component {
             <Route path="/profile" element={<Profile />} />
             {currentUser && showMedicBoard && !showAdminBoard && (
               <>
-               <Route path="/medic" element={<BoardMedic />} />
-               <Route path="/analytics" element={<Analytics />} />
+                <Route path="/medic" element={<BoardMedic />} />
+                <Route path="/analytics" element={<Analytics />} />
               </>
             )}
             {currentUser && !showMedicBoard && showAdminBoard && (

@@ -1,0 +1,81 @@
+.custom-appointment-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .custom-appointment-header {
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .custom-appointment-form {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .form-field {
+    margin-bottom: 10px;
+  }
+  
+  .submit-button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .feedback {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .facility-container {
+    background-color: #f7f7f7;
+    padding: 20px;
+  }
+  
+  .facility-heading {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .facility-card {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .facility-details {
+    margin-bottom: 10px;
+  }
+  
+  .facility-name {
+    font-weight: bold;
+  }
+  
+  .facility-address {
+    margin-top: 5px;
+  }
+  
+  .facility-status {
+    margin-bottom: 10px;
+  }
+  
+  .facility-not-available {
+    font-weight: bold;
+    font-style: italic;
+    color: red;
+  }
+  
+  .create-appointment-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
