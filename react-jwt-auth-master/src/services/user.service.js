@@ -50,6 +50,27 @@ class UserService {
   getAnalytics(centerId) {
     return axios.get(`http://localhost:8080/api/analytics/${centerId}/getAnalytics`, { headers: authHeader() });
   }
+
+  makeFacilityVisible(facilityId, token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    return axios.put(`http://localhost:8080/api/facilites/${facilityId}/makeVisible`, {}, config);
+  }
+
+  changeFacilityVisibility(facilityId, token) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    return axios.put(`http://localhost:8080/api/facilites/${facilityId}/changeVisibility`, {}, config);
+  }
+
 }
 
 export default new UserService();

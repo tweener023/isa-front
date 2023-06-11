@@ -13,6 +13,8 @@ export default class BoardMedic extends Component {
     this.handleNewAppointment = this.handleNewAppointment.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleMakeAvailable = this.handleMakeAvailable.bind(this);
+    this.handleMakeUnavailable = this.handleMakeUnavailable.bind(this);
     this.state = {
       content: "",
       appointments: [],
@@ -20,6 +22,7 @@ export default class BoardMedic extends Component {
       date: "",
       time: "",
       errorMessage: "",
+      visibilityMessage: "",
     };
   }
 
@@ -79,14 +82,16 @@ export default class BoardMedic extends Component {
     const selectedTime = new Date(`2000-01-01T${time}`);
     const selectedDay = selectedDate.getDay(); // Sunday is 0, Saturday is 6
 
-    const isValidTime = selectedTime.getHours() >= 7 && selectedTime.getHours() <= 18;
+    const isValidTime =
+      selectedTime.getHours() >= 7 && selectedTime.getHours() <= 18;
     const isWeekday = selectedDay >= 1 && selectedDay <= 5;
 
     if (!isValidTime || !isWeekday) {
       // Display an error message
       let errorMessage = "";
       if (!isValidTime) {
-        errorMessage = "Invalid time! Please select a time between 07:00 and 18:59.";
+        errorMessage =
+          "Invalid time! Please select a time between 07:00 and 18:59.";
       } else if (!isWeekday) {
         errorMessage = "Invalid day! Please select a weekday.";
       }
@@ -151,8 +156,41 @@ export default class BoardMedic extends Component {
     });
   };
 
+  handleMakeAvailable() {
+    const currentUser = AuthService.getCurrentUser();
+    UserService.makeFacilityVisible(this.state.content.centerId, currentUser.token)
+      .then(() => {
+        this.setState({ visibilityMessage: "Changed visibility successfully" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  handleMakeUnavailable() {
+    const currentUser = AuthService.getCurrentUser();
+    UserService.changeFacilityVisibility(
+      this.state.content.centerId,
+      currentUser.token
+    )
+      .then(() => {
+        this.setState({ visibilityMessage: "Changed visibility successfully" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
-    const { content, appointments, modalIsOpen, date, time, errorMessage } = this.state;
+    const {
+      content,
+      appointments,
+      modalIsOpen,
+      date,
+      time,
+      errorMessage,
+      visibilityMessage,
+    } = this.state;
     const customStyles = {
       content: {
         top: "50%",
@@ -226,6 +264,9 @@ export default class BoardMedic extends Component {
             </tbody>
           </table>
           <button onClick={this.handleOpenModal}>New Appointment</button>
+          <button onClick={this.handleMakeAvailable}>Make Available</button>
+          <button onClick={this.handleMakeUnavailable}>Make Unavailable</button>
+          {visibilityMessage && <p>{visibilityMessage}</p>}
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={this.handleCloseModal}
