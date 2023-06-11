@@ -141,7 +141,7 @@ export default function Appointments() {
             <p>Date: {appointment.dateOfAppointment}</p>
             <p>Time: {appointment.timeOfAppointment}</p>
             <button onClick={() => addAppointmentToUser(appointment)}>
-              Add to User
+              Scheadule Appointment
             </button>
           </div>
         ))}
