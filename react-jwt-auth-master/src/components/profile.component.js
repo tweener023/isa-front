@@ -11,6 +11,7 @@ export default class Profile extends Component {
       redirect: null,
       userReady: false,
       currentUser: { username: "" },
+      errors: {},
     };
   }
 
@@ -22,59 +23,102 @@ export default class Profile extends Component {
   }
 
   handleEdit = () => {
-    this.setState({ editing: true });
+    this.setState({ editing: true, errors: {} });
   };
 
   handleSave = async () => {
-    const token = AuthService.getJwt();
-    // console.log("evo ga token " + token);
     const { currentUser } = this.state;
-    //console.log(currentUser);
-    try {
-      const response = await fetch("http://localhost:8080/api/users", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(currentUser),
-      });
-      if (!response.ok) {
-        throw new Error(response.statusText);
+    const errors = this.validateFields(currentUser);
+
+    if (Object.keys(errors).length === 0) {
+      const token = AuthService.getJwt();
+
+      try {
+        const response = await fetch("http://localhost:8080/api/users", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(currentUser),
+        });
+
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+
+        this.setState({ editing: false });
+      } catch (error) {
+        console.error(error);
       }
-      this.setState({ editing: false });
-    } catch (error) {
-      console.error(error);
+    } else {
+      this.setState({ errors });
     }
   };
 
   handleChange = (event) => {
     const { currentUser } = this.state;
+    const { name, value } = event.target;
+
     this.setState({
-      currentUser: { ...currentUser, [event.target.name]: event.target.value },
+      currentUser: { ...currentUser, [name]: value },
     });
   };
 
-  render() {
-    const { redirect, userReady, editing } = this.state;
+  validateFields = (user) => {
+    const errors = {};
 
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />;
+    if (!/^[a-zA-Z]+$/.test(user.firstName)) {
+      errors.firstName = "First name should contain only letters.";
+    }
+
+    if (!/^[a-zA-Z]+$/.test(user.lastName)) {
+      errors.lastName = "Last name should contain only letters.";
+    }
+
+    if (!/^\d+$/.test(user.jmbg)) {
+      errors.jmbg = "JMBG should contain only numbers.";
+    }
+
+    if (!/^\d+$/.test(user.phoneNumber)) {
+      errors.phoneNumber = "Phone number should contain only numbers.";
+    }
+
+    if (!/^\d+$/.test(user.zipCode)) {
+      errors.zipCode = "Zip code should contain only numbers.";
+    }
+
+    if (!/^[a-zA-Z]+$/.test(user.city)) {
+      errors.city = "City should contain only letters.";
+    }
+
+    if (!/^[a-zA-Z]+$/.test(user.country)) {
+      errors.country = "Country should contain only letters.";
+    }
+
+    // Add validations for the remaining fields here
+
+    return errors;
+  };
+
+  render() {
+    const { redirect, userReady, editing, errors } = this.state;
+
+    if (redirect) {
+      return <Navigate to={redirect} />;
     }
 
     const { currentUser } = this.state;
 
     return (
       <div className="container">
-        {this.state.userReady ? (
+        {userReady ? (
           <div>
             <header className="jumbotron">
               <h3 className="usernameH3">
                 <strong>{currentUser.username}</strong>
               </h3>
               <div className="info-card">
-                
-                
                 <p>
                   <strong>Password: </strong>
                   {editing ? (
@@ -91,12 +135,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Firstname: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={currentUser.firstName}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={currentUser.firstName}
+                        onChange={this.handleChange}
+                      />
+                      {errors.firstName && (
+                        <span className="error">{errors.firstName}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.firstName
                   )}
@@ -104,12 +153,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Lastname: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={currentUser.lastName}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={currentUser.lastName}
+                        onChange={this.handleChange}
+                      />
+                      {errors.lastName && (
+                        <span className="error">{errors.lastName}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.lastName
                   )}
@@ -117,12 +171,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Address: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="address"
-                      value={currentUser.address}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="address"
+                        value={currentUser.address}
+                        onChange={this.handleChange}
+                      />
+                      {errors.address && (
+                        <span className="error">{errors.address}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.address
                   )}
@@ -130,12 +189,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>City: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="city"
-                      value={currentUser.city}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="city"
+                        value={currentUser.city}
+                        onChange={this.handleChange}
+                      />
+                      {errors.city && (
+                        <span className="error">{errors.city}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.city
                   )}
@@ -143,12 +207,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Zip code: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="zipCode"
-                      value={currentUser.zipCode}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="zipCode"
+                        value={currentUser.zipCode}
+                        onChange={this.handleChange}
+                      />
+                      {errors.zipCode && (
+                        <span className="error">{errors.zipCode}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.zipCode
                   )}
@@ -156,12 +225,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Country: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="country"
-                      value={currentUser.country}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="country"
+                        value={currentUser.country}
+                        onChange={this.handleChange}
+                      />
+                      {errors.country && (
+                        <span className="error">{errors.country}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.country
                   )}
@@ -169,12 +243,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>Phone number: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="phoneNumber"
-                      value={currentUser.phoneNumber}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="phoneNumber"
+                        value={currentUser.phoneNumber}
+                        onChange={this.handleChange}
+                      />
+                      {errors.phoneNumber && (
+                        <span className="error">{errors.phoneNumber}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.phoneNumber
                   )}
@@ -182,12 +261,17 @@ export default class Profile extends Component {
                 <p>
                   <strong>JMBG: </strong>
                   {editing ? (
-                    <input
-                      type="text"
-                      name="jmbg"
-                      value={currentUser.jmbg}
-                      onChange={this.handleChange}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        name="jmbg"
+                        value={currentUser.jmbg}
+                        onChange={this.handleChange}
+                      />
+                      {errors.jmbg && (
+                        <span className="error">{errors.jmbg}</span>
+                      )}
+                    </div>
                   ) : (
                     currentUser.jmbg
                   )}
@@ -217,54 +301,20 @@ export default class Profile extends Component {
                     currentUser.gender
                   )}
                 </p>
-                <p>
-                  <strong>Job: </strong>
-                  {editing ? (
-                    <input
-                      type="text"
-                      name="job"
-                      value={currentUser.job}
-                      onChange={this.handleChange}
-                    />
-                  ) : (
-                    currentUser.job
-                  )}
-                </p>
-                <p>
-                  <strong>Workplace: </strong>
-                  {editing ? (
-                    <input
-                      type="text"
-                      name="workplace"
-                      value={currentUser.workplace}
-                      onChange={this.handleChange}
-                    />
-                  ) : (
-                    currentUser.workplace
-                  )}
-                </p>
-
-                  <strong>Points collected:   {currentUser.pointsCollected} </strong>
-                  
               </div>
-
               {editing ? (
-                <>
-                  <div className="button-container">
-                    <button className="btnSave" onClick={this.handleSave}>
-                      Save
-                    </button>
-                    <button
-                      className="btnCancel"
-                      onClick={() => this.setState({ editing: false })}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </>
+                <button
+                  className="btn btn-primary"
+                  onClick={this.handleSave}
+                >
+                  Save
+                </button>
               ) : (
-                <button className="btnChange" onClick={this.handleEdit}>
-                  Change info
+                <button
+                  className="btn btn-primary"
+                  onClick={this.handleEdit}
+                >
+                  Edit
                 </button>
               )}
             </header>
