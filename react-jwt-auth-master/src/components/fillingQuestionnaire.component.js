@@ -214,6 +214,11 @@ export default class FillingQuestionnaire extends Component {
         </div>
       );
     }
+    const bloodTypeOptions = ["A", "B", "AB", "O"].map((type) => (
+      <option key={type} value={type}>
+        {type}
+      </option>
+    ));
     return (
       <div className="col-md-12">
         <div className="card card-container">
@@ -368,14 +373,16 @@ export default class FillingQuestionnaire extends Component {
 
                 <div className="form-group">
                   <label htmlFor="bloodType">Blood type</label>
-                  <Input
-                    type="text"
+                  <select
                     className="form-control"
                     name="bloodType"
                     value={this.state.bloodType}
                     onChange={this.onChangeBloodType}
                     validations={[required]}
-                  />
+                  >
+                    <option value="">Select blood type</option>
+                    {bloodTypeOptions}
+                  </select>
                 </div>
 
                 <div className="form-group">

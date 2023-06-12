@@ -412,14 +412,17 @@ export default class Register extends Component {
 
                 <div className="form-group">
                   <label htmlFor="gender">Gender</label>
-                  <Input
-                    type="text"
+                  <select
                     className="form-control"
                     name="gender"
                     value={this.state.gender}
                     onChange={this.onChangeGender}
                     validations={[required]}
-                  />
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="MALE">MALE</option>
+                    <option value="FEMALE">FEMALE</option>
+                  </select>
                 </div>
 
                 <div className="form-group">

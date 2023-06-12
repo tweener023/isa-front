@@ -105,7 +105,7 @@ export default function ScheaduledAppointments() {
   return (
     <div className="Appointments" id="appointments">
       <header className="App-header">
-        <h1 className="FacilityH1">Past Appointments</h1>
+        <h1 className="FacilityH1">Scheaduled Appointments</h1>
         <div className="search-bar">
           <button
             className={`sort-button ${sortBy === "date" ? "active" : ""}`}
